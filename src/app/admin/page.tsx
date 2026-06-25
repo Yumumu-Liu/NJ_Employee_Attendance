@@ -536,17 +536,29 @@ export default function AdminDashboard() {
                       {data.checkOut ? format(new Date(data.checkOut.timestamp), 'HH:mm:ss') : '-'}
                     </td>
                     <td className="px-6 py-4 font-medium">{t(data.status === 'normal' ? 'normal' : data.status === 'missing_in' ? 'missingCheckIn' : data.status === 'missing_out' ? 'missingCheckOut' : 'absent')}</td>
-                    <td className="px-6 py-4 flex gap-2">
-                      {data.checkIn && (
-                        <button onClick={() => handleDeleteRecord(data.checkIn!.id)} className="text-red-500 hover:text-red-700" title="Delete check-in">
-                          ✕
-                        </button>
-                      )}
-                      {data.checkOut && (
-                        <button onClick={() => handleDeleteRecord(data.checkOut!.id)} className="text-red-500 hover:text-red-700" title="Delete check-out">
-                          ✕
-                        </button>
-                      )}
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2">
+                        {data.checkIn && (
+                          <button
+                            onClick={() => handleDeleteRecord(data.checkIn!.id)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-red-300 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 transition-all hover:bg-red-100 hover:border-red-400"
+                            title="Delete check-in record"
+                          >
+                            <Trash2 size={14} />
+                            {t('delCheckIn')}
+                          </button>
+                        )}
+                        {data.checkOut && (
+                          <button
+                            onClick={() => handleDeleteRecord(data.checkOut!.id)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-red-300 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 transition-all hover:bg-red-100 hover:border-red-400"
+                            title="Delete check-out record"
+                          >
+                            <Trash2 size={14} />
+                            {t('delCheckOut')}
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
