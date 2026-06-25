@@ -10,6 +10,7 @@ export async function GET() {
       select: {
         id: true,
         name: true,
+        pin: true,
         avatarUrl: true,
         workType: true,
         workTime: true
