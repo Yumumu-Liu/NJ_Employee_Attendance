@@ -20,7 +20,7 @@ export const translations = {
     attendance: 'Attendance System',
     checkIn: 'Check In',
     admin: 'Admin Dashboard',
-    leiji: 'LeiJi Lemon Tea',
+    leiji: 'NingJi Lemon Tea',
 
     // Kiosk
     selectEmployee: 'Select Employee',
