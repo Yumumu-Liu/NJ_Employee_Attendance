@@ -20,7 +20,7 @@ export const translations = {
     attendance: 'Attendance System',
     checkIn: 'Check In',
     admin: 'Admin Dashboard',
-    leiji: 'LeiJi Lemon Tea',
+    leiji: 'Ningji Lemon Tea',
 
     // Kiosk
     selectEmployee: 'Select Employee',
@@ -91,7 +91,7 @@ export const translations = {
     attendance: '考勤系统',
     checkIn: '打卡',
     admin: '管理后台',
-    leiji: '柠季手打柠檬茶',
+    leiji: '宁季手打柠檬茶',
 
     // Kiosk
     selectEmployee: '选择员工',

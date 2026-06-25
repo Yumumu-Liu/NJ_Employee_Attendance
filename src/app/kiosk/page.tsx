@@ -181,7 +181,9 @@ export default function KioskPage() {
               {currentTime.toLocaleTimeString(language === 'zh' ? 'zh-CN' : 'en-US', { hour: '2-digit', minute: '2-digit' })}
             </div>
             <div className="text-gray-600 text-sm">
-              {currentTime.toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US')}
+              {language === 'zh'
+                ? currentTime.toLocaleDateString('zh-CN')
+                : currentTime.toLocaleDateString('en-GB')}
             </div>
           </div>
         </div>
