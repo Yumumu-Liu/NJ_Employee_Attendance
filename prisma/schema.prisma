@@ -14,6 +14,8 @@ model Employee {
   name      String
   pin       String      // 4-digit PIN for check-in
   avatarUrl String?     // Optional URL for employee's display picture
+  workType  String      @default("full")  // "full" for full-time, "part" for part-time
+  workTime  String?     // Expected work start time (HH:mm format)
   isActive  Boolean     @default(true)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt

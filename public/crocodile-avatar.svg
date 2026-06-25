@@ -1,0 +1,24 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Body -->
+  <ellipse cx="100" cy="120" rx="70" ry="50" fill="#66CC00"/>
+
+  <!-- Tail -->
+  <path d="M 150 130 Q 180 120 190 90" stroke="#66CC00" stroke-width="35" fill="none" stroke-linecap="round"/>
+
+  <!-- Head -->
+  <ellipse cx="70" cy="80" rx="45" ry="50" fill="#66CC00"/>
+
+  <!-- Snout -->
+  <ellipse cx="35" cy="85" rx="28" ry="25" fill="#66CC00"/>
+
+  <!-- Eye white -->
+  <circle cx="65" cy="60" r="12" fill="white"/>
+  <circle cx="65" cy="60" r="8" fill="black"/>
+
+  <!-- Other eye white -->
+  <circle cx="85" cy="50" r="12" fill="white"/>
+  <circle cx="85" cy="50" r="8" fill="black"/>
+
+  <!-- Mouth line -->
+  <path d="M 35 95 Q 40 105 50 105" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>
