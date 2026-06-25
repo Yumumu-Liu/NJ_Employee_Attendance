@@ -54,9 +54,9 @@ export default function AdminDashboard() {
   const [importing, setImporting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Check if already logged in on mount
+  // Always require login (don't check localStorage)
   useEffect(() => {
-    setAuthenticated(isAdminLoggedIn())
+    setAuthenticated(false)
   }, [])
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
     const verified = await verifyAdminPassword(password)
 
     if (verified) {
-      setAdminLoggedIn(true)
+      // Only keep login in memory, not localStorage
       setAuthenticated(true)
       setPassword('')
     } else {
@@ -88,7 +88,6 @@ export default function AdminDashboard() {
   }
 
   const handleLogout = () => {
-    setAdminLoggedIn(false)
     setAuthenticated(false)
     setPassword('')
     setFormMessage(null)
@@ -339,17 +338,25 @@ export default function AdminDashboard() {
   // Main Dashboard
   return (
     <div className="min-h-screen p-8">
-      {/* Language Toggle + Logout */}
+      {/* Navigation + Logout */}
       <div className="mb-6 flex justify-between items-center">
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 bg-red-100 text-red-700 hover:bg-red-200 px-4 py-2 rounded-lg font-medium transition-all"
-        >
-          <LogOut size={20} />
-          Logout
-        </button>
+        <div className="flex gap-4">
+          <a
+            href="/kiosk"
+            className="glass-sm px-4 py-2 font-medium text-gray-600 hover:text-gray-900 transition-all"
+          >
+            ← Back to Kiosk
+          </a>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 bg-red-100 text-red-700 hover:bg-red-200 px-4 py-2 rounded-lg font-medium transition-all"
+          >
+            <LogOut size={20} />
+            Logout
+          </button>
+        </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2" style={{marginLeft: 'auto'}}>
           {(['en', 'zh'] as Language[]).map(lang => (
             <button
               key={lang}

@@ -9,6 +9,7 @@ type Employee = {
   id: string
   name: string
   avatarUrl: string | null
+  workType?: string
 }
 
 export default function KioskPage() {
@@ -198,25 +199,63 @@ export default function KioskPage() {
         </div>
       </header>
 
-      {/* Employee Grid */}
-      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        {employees.map((emp) => (
-          <button
-            key={emp.id}
-            onClick={() => setSelectedEmployee(emp)}
-            className="group glass-sm flex flex-col items-center p-6 transition-all hover:scale-105 hover:shadow-lg"
-          >
-            <div className="mb-4 overflow-hidden rounded-full border-4" style={{ borderColor: 'var(--primary-light)' }}>
-              <img
-                src="/crocodile-avatar.png"
-                alt={emp.name}
-                className="h-24 w-24 object-cover"
-              />
-            </div>
-            <span className="text-lg font-medium text-gray-800">{emp.name}</span>
-          </button>
-        ))}
-      </div>
+      {/* Full-time Section */}
+      {employees.some(e => e.workType === 'full') && (
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--primary)' }}>
+            {language === 'zh' ? '全职员工' : 'Full-Time'}
+          </h2>
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            {employees
+              .filter(e => e.workType === 'full')
+              .map((emp) => (
+                <button
+                  key={emp.id}
+                  onClick={() => setSelectedEmployee(emp)}
+                  className="group glass-sm flex flex-col items-center p-6 transition-all hover:scale-105 hover:shadow-lg"
+                >
+                  <div className="mb-4 overflow-hidden rounded-full border-4" style={{ borderColor: 'var(--primary-light)' }}>
+                    <img
+                      src="/crocodile-avatar.png"
+                      alt={emp.name}
+                      className="h-24 w-24 object-cover"
+                    />
+                  </div>
+                  <span className="text-lg font-medium text-gray-800">{emp.name}</span>
+                </button>
+              ))}
+          </div>
+        </div>
+      )}
+
+      {/* Part-time Section */}
+      {employees.some(e => e.workType === 'part') && (
+        <div>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--primary)' }}>
+            {language === 'zh' ? '兼职员工' : 'Part-Time'}
+          </h2>
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            {employees
+              .filter(e => e.workType === 'part')
+              .map((emp) => (
+                <button
+                  key={emp.id}
+                  onClick={() => setSelectedEmployee(emp)}
+                  className="group glass-sm flex flex-col items-center p-6 transition-all hover:scale-105 hover:shadow-lg"
+                >
+                  <div className="mb-4 overflow-hidden rounded-full border-4" style={{ borderColor: 'var(--primary-light)' }}>
+                    <img
+                      src="/crocodile-avatar.png"
+                      alt={emp.name}
+                      className="h-24 w-24 object-cover"
+                    />
+                  </div>
+                  <span className="text-lg font-medium text-gray-800">{emp.name}</span>
+                </button>
+              ))}
+          </div>
+        </div>
+      )}
 
       {/* Modal */}
       {selectedEmployee && (
