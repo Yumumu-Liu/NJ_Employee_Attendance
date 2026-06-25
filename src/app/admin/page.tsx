@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { format, startOfDay, subDays, addDays } from 'date-fns'
-import { Calendar, ChevronLeft, ChevronRight, Download, Trash2, Plus, Upload } from 'lucide-react'
+import { Calendar, ChevronLeft, ChevronRight, Download, Trash2, Plus, Upload, LogOut, Lock } from 'lucide-react'
 import * as XLSX from 'xlsx'
 import { useI18n } from '@/lib/i18n'
+import { isAdminLoggedIn, setAdminLoggedIn, verifyAdminPassword } from '@/lib/admin-auth'
 import type { Language } from '@/lib/i18n'
 
 type Employee = {
@@ -38,6 +39,9 @@ type DailyAttendance = {
 
 export default function AdminDashboard() {
   const { language, setLanguage, t } = useI18n()
+  const [authenticated, setAuthenticated] = useState(false)
+  const [password, setPassword] = useState('')
+  const [loginError, setLoginError] = useState('')
   const [currentDate, setCurrentDate] = useState(startOfDay(new Date()))
   const [records, setRecords] = useState<Record[]>([])
   const [employees, setEmployees] = useState<Employee[]>([])
@@ -50,10 +54,45 @@ export default function AdminDashboard() {
   const [importing, setImporting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // Check if already logged in on mount
   useEffect(() => {
+    setAuthenticated(isAdminLoggedIn())
+  }, [])
+
+  useEffect(() => {
+    if (!authenticated) return
+
     fetchRecords(currentDate)
     fetchEmployees()
-  }, [currentDate])
+  }, [currentDate, authenticated])
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoginError('')
+
+    if (!password) {
+      setLoginError('Please enter password')
+      return
+    }
+
+    const verified = await verifyAdminPassword(password)
+
+    if (verified) {
+      setAdminLoggedIn(true)
+      setAuthenticated(true)
+      setPassword('')
+    } else {
+      setLoginError('Invalid password')
+      setPassword('')
+    }
+  }
+
+  const handleLogout = () => {
+    setAdminLoggedIn(false)
+    setAuthenticated(false)
+    setPassword('')
+    setFormMessage(null)
+  }
 
   const fetchRecords = async (date: Date) => {
     setLoading(true)
@@ -232,23 +271,94 @@ export default function AdminDashboard() {
     }
   }
 
+  // Login Screen
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="glass w-full max-w-md p-8">
+          <div className="flex items-center justify-center mb-8">
+            <Lock size={48} style={{ color: 'var(--primary)' }} />
+          </div>
+
+          <h1 className="text-3xl font-bold text-center mb-2" style={{ color: 'var(--primary)' }}>
+            Admin Login
+          </h1>
+          <p className="text-center text-gray-600 mb-8">Enter password to access dashboard</p>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <input
+                type="password"
+                placeholder="Admin Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="glass-sm w-full px-4 py-3 text-lg"
+                autoFocus
+              />
+            </div>
+
+            {loginError && (
+              <div className="bg-red-100 text-red-700 p-4 rounded-lg font-medium">
+                {loginError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="accent-primary w-full py-3 font-bold text-white rounded-lg"
+            >
+              Login
+            </button>
+          </form>
+
+          <div className="mt-6 flex justify-end">
+            {(['en', 'zh'] as Language[]).map(lang => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={`glass-sm px-3 py-1 mx-1 font-medium transition-all ${
+                  language === lang
+                    ? 'accent-primary text-white'
+                    : 'text-gray-600'
+                }`}
+              >
+                {lang === 'en' ? 'EN' : '中文'}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Main Dashboard
   return (
     <div className="min-h-screen p-8">
-      {/* Language Toggle */}
-      <div className="mb-6 flex justify-end gap-2">
-        {(['en', 'zh'] as Language[]).map(lang => (
-          <button
-            key={lang}
-            onClick={() => setLanguage(lang)}
-            className={`glass-sm px-4 py-2 font-medium transition-all ${
-              language === lang
-                ? 'accent-primary text-white'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            {lang === 'en' ? 'EN' : '中文'}
-          </button>
-        ))}
+      {/* Language Toggle + Logout */}
+      <div className="mb-6 flex justify-between items-center">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 bg-red-100 text-red-700 hover:bg-red-200 px-4 py-2 rounded-lg font-medium transition-all"
+        >
+          <LogOut size={20} />
+          Logout
+        </button>
+
+        <div className="flex gap-2">
+          {(['en', 'zh'] as Language[]).map(lang => (
+            <button
+              key={lang}
+              onClick={() => setLanguage(lang)}
+              className={`glass-sm px-4 py-2 font-medium transition-all ${
+                language === lang
+                  ? 'accent-primary text-white'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {lang === 'en' ? 'EN' : '中文'}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Header */}
