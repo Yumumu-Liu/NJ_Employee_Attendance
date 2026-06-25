@@ -269,6 +269,7 @@ export default function KioskPage() {
                 playsInline
                 muted
                 className="h-full w-full object-cover"
+                style={{ transform: 'scaleX(-1)' }}
               />
               <canvas ref={canvasRef} className="hidden" />
               <div className="absolute bottom-6 left-0 right-0 flex justify-center">
