@@ -197,9 +197,9 @@ export default function KioskPage() {
           >
             <div className="mb-4 overflow-hidden rounded-full border-4" style={{ borderColor: 'var(--primary-light)' }}>
               <img
-                src="/crocodile-avatar.svg"
+                src="/crocodile-avatar.png"
                 alt={emp.name}
-                className="h-24 w-24 bg-gray-100 p-2"
+                className="h-24 w-24 object-cover"
               />
             </div>
             <span className="text-lg font-medium text-gray-800">{emp.name}</span>
@@ -234,9 +234,9 @@ export default function KioskPage() {
               <div className="mb-8 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <img
-                    src="/crocodile-avatar.svg"
+                    src="/crocodile-avatar.png"
                     alt={selectedEmployee.name}
-                    className="h-16 w-16 bg-gray-100 rounded-full p-2"
+                    className="h-16 w-16 rounded-full object-cover"
                   />
                   <div>
                     <h2 className="text-2xl font-bold">{selectedEmployee.name}</h2>
