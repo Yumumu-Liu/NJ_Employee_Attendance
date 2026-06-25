@@ -47,6 +47,8 @@ export default function AdminDashboard() {
   const [employees, setEmployees] = useState<Employee[]>([])
   const [loading, setLoading] = useState(true)
   const [photoModal, setPhotoModal] = useState<string | null>(null)
+  const [editingRecord, setEditingRecord] = useState<Record | null>(null)
+  const [editRecordData, setEditRecordData] = useState({ type: '', timestamp: '' })
   const [tab, setTab] = useState<'attendance' | 'employees'>('attendance')
   const [showAddForm, setShowAddForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -236,6 +238,58 @@ export default function AdminDashboard() {
       }
     } catch (err) {
       console.error('Failed to delete employee', err)
+    }
+  }
+
+  const handleEditRecord = (record: Record) => {
+    setEditingRecord(record)
+    const timestamp = new Date(record.timestamp)
+    const dateStr = format(timestamp, 'yyyy-MM-dd')
+    const timeStr = format(timestamp, 'HH:mm')
+    setEditRecordData({
+      type: record.type,
+      timestamp: `${dateStr}T${timeStr}`
+    })
+  }
+
+  const handleUpdateRecord = async () => {
+    if (!editingRecord) return
+
+    try {
+      const res = await fetch(`/api/records/${editingRecord.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: editRecordData.type,
+          timestamp: editRecordData.timestamp
+        })
+      })
+
+      if (res.ok) {
+        setEditingRecord(null)
+        fetchRecords(currentDate)
+      } else {
+        alert('Failed to update record')
+      }
+    } catch (err) {
+      console.error('Failed to update record', err)
+      alert('Error updating record')
+    }
+  }
+
+  const handleDeleteRecord = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this record?')) return
+
+    try {
+      const res = await fetch(`/api/records/${id}`, { method: 'DELETE' })
+      if (res.ok) {
+        fetchRecords(currentDate)
+      } else {
+        alert('Failed to delete record')
+      }
+    } catch (err) {
+      console.error('Failed to delete record', err)
+      alert('Error deleting record')
     }
   }
 
@@ -460,7 +514,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Records Table */}
-          <div className="glass overflow-hidden">
+          <div className="glass overflow-x-auto">
             <table className="w-full">
               <thead className="accent-primary-light">
                 <tr>
@@ -468,20 +522,91 @@ export default function AdminDashboard() {
                   <th className="px-6 py-4 text-left font-semibold">{t('checkInTime_label')}</th>
                   <th className="px-6 py-4 text-left font-semibold">{t('checkOutTime')}</th>
                   <th className="px-6 py-4 text-left font-semibold">{t('status')}</th>
+                  <th className="px-6 py-4 text-left font-semibold">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {processAttendance().map((data) => (
                   <tr key={data.employeeId} className={`border-t border-gray-200 ${getStatusColor(data.status)}`}>
                     <td className="px-6 py-4 font-medium">{data.employeeName}</td>
-                    <td className="px-6 py-4">{data.checkIn ? format(new Date(data.checkIn.timestamp), 'HH:mm:ss') : '-'}</td>
-                    <td className="px-6 py-4">{data.checkOut ? format(new Date(data.checkOut.timestamp), 'HH:mm:ss') : '-'}</td>
+                    <td className="px-6 py-4 cursor-pointer hover:text-blue-600" onClick={() => data.checkIn && handleEditRecord(data.checkIn)}>
+                      {data.checkIn ? format(new Date(data.checkIn.timestamp), 'HH:mm:ss') : '-'}
+                    </td>
+                    <td className="px-6 py-4 cursor-pointer hover:text-blue-600" onClick={() => data.checkOut && handleEditRecord(data.checkOut)}>
+                      {data.checkOut ? format(new Date(data.checkOut.timestamp), 'HH:mm:ss') : '-'}
+                    </td>
                     <td className="px-6 py-4 font-medium">{t(data.status === 'normal' ? 'normal' : data.status === 'missing_in' ? 'missingCheckIn' : data.status === 'missing_out' ? 'missingCheckOut' : 'absent')}</td>
+                    <td className="px-6 py-4 flex gap-2">
+                      {data.checkIn && (
+                        <button onClick={() => handleDeleteRecord(data.checkIn!.id)} className="text-red-500 hover:text-red-700" title="Delete check-in">
+                          ✕
+                        </button>
+                      )}
+                      {data.checkOut && (
+                        <button onClick={() => handleDeleteRecord(data.checkOut!.id)} className="text-red-500 hover:text-red-700" title="Delete check-out">
+                          ✕
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+
+          {/* Edit Record Modal */}
+          {editingRecord && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md p-4">
+              <div className="glass w-full max-w-md p-8">
+                <h3 className="text-2xl font-bold mb-6">Edit Record</h3>
+
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 block mb-2">
+                      Employee: {editingRecord.employee.name}
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 block mb-2">Type</label>
+                    <select
+                      value={editRecordData.type}
+                      onChange={(e) => setEditRecordData({ ...editRecordData, type: e.target.value })}
+                      className="glass-sm w-full px-4 py-2"
+                    >
+                      <option value="CHECK_IN">Check In</option>
+                      <option value="CHECK_OUT">Check Out</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 block mb-2">Date & Time</label>
+                    <input
+                      type="datetime-local"
+                      value={editRecordData.timestamp}
+                      onChange={(e) => setEditRecordData({ ...editRecordData, timestamp: e.target.value })}
+                      className="glass-sm w-full px-4 py-2"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <button
+                    onClick={handleUpdateRecord}
+                    className="accent-primary flex-1 py-2 text-white font-medium rounded-lg"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => setEditingRecord(null)}
+                    className="glass-sm flex-1 py-2 font-medium rounded-lg"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
