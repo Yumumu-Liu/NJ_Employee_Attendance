@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Attendance System",
   description: "Employee attendance tracking system",
+  icons: {
+    icon: "/crocodile-avatar.png",
+  },
 };
 
 export default function RootLayout({
