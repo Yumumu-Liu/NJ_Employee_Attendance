@@ -49,6 +49,7 @@ export default function AdminDashboard() {
   const [photoModal, setPhotoModal] = useState<string | null>(null)
   const [tab, setTab] = useState<'attendance' | 'employees'>('attendance')
   const [showAddForm, setShowAddForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [newEmployee, setNewEmployee] = useState({ name: '', pin: '', workType: 'full', workTime: '' })
   const [formMessage, setFormMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
   const [importing, setImporting] = useState(false)
@@ -172,8 +173,12 @@ export default function AdminDashboard() {
     }
 
     try {
-      const res = await fetch('/api/employees', {
-        method: 'POST',
+      // If editing, use PUT; if adding, use POST
+      const method = editingId ? 'PUT' : 'POST'
+      const url = editingId ? `/api/employees/${editingId}` : '/api/employees'
+
+      const res = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: newEmployee.name,
@@ -184,8 +189,12 @@ export default function AdminDashboard() {
       })
 
       if (res.ok) {
-        setFormMessage({ text: 'Employee added successfully!', type: 'success' })
+        setFormMessage({
+          text: editingId ? 'Employee updated successfully!' : 'Employee added successfully!',
+          type: 'success'
+        })
         setNewEmployee({ name: '', pin: '', workType: 'full', workTime: '' })
+        setEditingId(null)
         setTimeout(() => {
           setShowAddForm(false)
           fetchEmployees()
@@ -195,8 +204,26 @@ export default function AdminDashboard() {
         setFormMessage({ text: data.error, type: 'error' })
       }
     } catch (err) {
-      setFormMessage({ text: 'Failed to add employee', type: 'error' })
+      setFormMessage({ text: editingId ? 'Failed to update employee' : 'Failed to add employee', type: 'error' })
     }
+  }
+
+  const handleEditEmployee = (emp: Employee) => {
+    setEditingId(emp.id)
+    setNewEmployee({
+      name: emp.name,
+      pin: emp.pin,
+      workType: emp.workType || 'full',
+      workTime: emp.workTime || ''
+    })
+    setShowAddForm(true)
+  }
+
+  const cancelEdit = () => {
+    setEditingId(null)
+    setNewEmployee({ name: '', pin: '', workType: 'full', workTime: '' })
+    setShowAddForm(false)
+    setFormMessage(null)
   }
 
   const handleDeleteEmployee = async (id: string) => {
@@ -493,6 +520,10 @@ export default function AdminDashboard() {
 
             {showAddForm && (
               <form onSubmit={handleAddEmployee} className="mb-6 space-y-4 border-t pt-6">
+                <h3 className="text-lg font-bold mb-4">
+                  {editingId ? '✏️ Edit Employee' : '➕ Add Employee'}
+                </h3>
+
                 {formMessage && (
                   <div className={`rounded-lg p-4 font-medium ${
                     formMessage.type === 'success'
@@ -549,11 +580,11 @@ export default function AdminDashboard() {
                     type="submit"
                     className="accent-primary flex-1 rounded-lg py-2 text-white font-medium"
                   >
-                    {t('save')}
+                    {editingId ? 'Update' : t('save')}
                   </button>
                   <button
                     type="button"
-                    onClick={() => setShowAddForm(false)}
+                    onClick={cancelEdit}
                     className="glass-sm flex-1 rounded-lg py-2 font-medium"
                   >
                     {t('cancel')}
@@ -567,19 +598,31 @@ export default function AdminDashboard() {
               {employees.length > 0 ? (
                 employees.map((emp) => (
                   <div key={emp.id} className="glass-sm flex items-center justify-between p-4">
-                    <div>
-                      <div className="font-semibold">{emp.name}</div>
+                    <div className="flex-1">
+                      <div className="font-semibold cursor-pointer hover:text-green-600 transition-colors" onClick={() => handleEditEmployee(emp)}>
+                        {emp.name}
+                      </div>
                       <div className="text-sm text-gray-600">
                         {t('pin')}: {emp.pin} | {emp.workType === 'full' ? t('fullTime') : t('partTime')}
                         {emp.workTime && ` | ${t('checkInTime_label')}: ${emp.workTime}`}
                       </div>
                     </div>
-                    <button
-                      onClick={() => handleDeleteEmployee(emp.id)}
-                      className="text-red-500 hover:text-red-700 transition-colors"
-                    >
-                      <Trash2 size={20} />
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEditEmployee(emp)}
+                        className="text-blue-500 hover:text-blue-700 transition-colors p-2"
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => handleDeleteEmployee(emp.id)}
+                        className="text-red-500 hover:text-red-700 transition-colors p-2"
+                        title="Delete"
+                      >
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
                   </div>
                 ))
               ) : (
