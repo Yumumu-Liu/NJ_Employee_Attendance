@@ -152,21 +152,30 @@ export default function KioskPage() {
 
   return (
     <div className="flex min-h-screen flex-col p-8">
-      {/* Language Toggle */}
-      <div className="mb-6 flex justify-end gap-2">
-        {(['en', 'zh'] as Language[]).map(lang => (
-          <button
-            key={lang}
-            onClick={() => setLanguage(lang)}
-            className={`glass-sm px-4 py-2 font-medium transition-all ${
-              language === lang
-                ? 'accent-primary text-white'
-                : 'text-gray-600 hover:text-gray-900'
-            }`}
-          >
-            {lang === 'en' ? 'EN' : '中文'}
-          </button>
-        ))}
+      {/* Top Navigation */}
+      <div className="mb-6 flex justify-between items-center">
+        <a
+          href="/admin"
+          className="glass-sm px-4 py-2 font-medium text-gray-600 hover:text-gray-900 transition-all"
+        >
+          Admin
+        </a>
+
+        <div className="flex gap-2">
+          {(['en', 'zh'] as Language[]).map(lang => (
+            <button
+              key={lang}
+              onClick={() => setLanguage(lang)}
+              className={`glass-sm px-4 py-2 font-medium transition-all ${
+                language === lang
+                  ? 'accent-primary text-white'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {lang === 'en' ? 'EN' : '中文'}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Header */}

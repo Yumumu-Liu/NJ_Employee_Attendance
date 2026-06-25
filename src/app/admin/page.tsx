@@ -153,6 +153,11 @@ export default function AdminDashboard() {
     })
   }
 
+  const generatePin = () => {
+    const pin = String(Math.floor(Math.random() * 10000)).padStart(4, '0')
+    setNewEmployee({ ...newEmployee, pin })
+  }
+
   const handleAddEmployee = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormMessage(null)
@@ -499,14 +504,23 @@ export default function AdminDashboard() {
                     onChange={(e) => setNewEmployee({ ...newEmployee, name: e.target.value })}
                     className="glass-sm rounded-lg px-4 py-2"
                   />
-                  <input
-                    type="text"
-                    placeholder="PIN (4 digits)"
-                    value={newEmployee.pin}
-                    onChange={(e) => setNewEmployee({ ...newEmployee, pin: e.target.value })}
-                    maxLength={4}
-                    className="glass-sm rounded-lg px-4 py-2"
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="PIN (4 digits)"
+                      value={newEmployee.pin}
+                      onChange={(e) => setNewEmployee({ ...newEmployee, pin: e.target.value })}
+                      maxLength={4}
+                      className="glass-sm rounded-lg px-4 py-2 flex-1"
+                    />
+                    <button
+                      type="button"
+                      onClick={generatePin}
+                      className="glass-sm px-3 py-2 font-medium hover:scale-105 transition-transform whitespace-nowrap"
+                    >
+                      Generate
+                    </button>
+                  </div>
                   <select
                     value={newEmployee.workType}
                     onChange={(e) => setNewEmployee({ ...newEmployee, workType: e.target.value })}
