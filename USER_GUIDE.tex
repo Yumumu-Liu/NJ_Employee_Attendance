@@ -1,0 +1,233 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\section{Employee User Guide}\label{employee-user-guide}
+
+\subsection{柠季手打柠檬茶 考勤系统 -
+员工使用指南}\label{ux67e0ux5b63ux624bux6253ux67e0ux6aacux8336-ux8003ux52e4ux7cfbux7edf---ux5458ux5de5ux4f7fux7528ux6307ux5357}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{系统简介}\label{ux7cfbux7edfux7b80ux4ecb}
+
+这是一个现代化的员工考勤系统，通过人脸识别 + PIN
+码来记录员工的上下班打卡。
+
+\textbf{URL}: 打卡页面地址 （由管理员提供）
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{快速开始}\label{ux5febux901fux5f00ux59cb}
+
+\subsubsection{步骤
+1：进入打卡页面}\label{ux6b65ux9aa4-1ux8fdbux5165ux6253ux5361ux9875ux9762}
+
+打开浏览器，访问打卡系统链接。
+
+\subsubsection{步骤
+2：选择语言}\label{ux6b65ux9aa4-2ux9009ux62e9ux8bedux8a00}
+
+右上角可选择 \textbf{EN}（英文）或 \textbf{中文}
+
+\subsubsection{步骤
+3：选择你的头像}\label{ux6b65ux9aa4-3ux9009ux62e9ux4f60ux7684ux5934ux50cf}
+
+\begin{itemize}
+\tightlist
+\item
+  页面显示两个区域：\textbf{Full-Time}（全职）和
+  \textbf{Part-Time}（兼职）
+\item
+  找到你的名字下的鳄鱼头像
+\item
+  点击头像卡片
+\end{itemize}
+
+\subsubsection{步骤 4：输入 PIN
+码}\label{ux6b65ux9aa4-4ux8f93ux5165-pin-ux7801}
+
+\begin{itemize}
+\tightlist
+\item
+  在右侧弹出的窗口中输入你的 4 位 PIN 码
+\item
+  数字键盘会显示 1-9、0 和清空按钮
+\item
+  PIN 显示为 •••• （隐藏）
+\end{itemize}
+
+\subsubsection{步骤
+5：拍照确认}\label{ux6b65ux9aa4-5ux62cdux7167ux786eux8ba4}
+
+\begin{itemize}
+\tightlist
+\item
+  摄像头会启动，显示你的实时镜像画面
+\item
+  确保你的脸清晰可见
+\item
+  摄像头是镜像显示，就像照镜子一样
+\end{itemize}
+
+\subsubsection{步骤
+6：选择打卡类型并提交}\label{ux6b65ux9aa4-6ux9009ux62e9ux6253ux5361ux7c7bux578bux5e76ux63d0ux4ea4}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{上班打卡} (Check-In): 按这个按钮记录上班时间
+\item
+  \textbf{下班打卡} (Check-Out): 按这个按钮记录下班时间
+\item
+  成功后会显示绿色提示信息
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{💡 使用技巧}\label{ux4f7fux7528ux6280ux5de7}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+操作 & 说明 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{忘记 PIN?} & 请联系管理员重置或生成新 PIN \\
+\textbf{摄像头无法启动} & 检查浏览器权限，允许访问摄像头 \\
+\textbf{重新拍照} & 返回按钮（✕）关闭当前打卡，返回选择员工 \\
+\textbf{时间显示} & 右上角显示当前系统时间，确保打卡时间准确 \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{常见问题}\label{ux5e38ux89c1ux95eeux9898}
+
+\subsubsection{Q: 打卡失败显示''Invalid
+PIN''}\label{q-ux6253ux5361ux5931ux8d25ux663eux793ainvalid-pin}
+
+\textbf{A:} PIN 码输入错误。请确保输入的是正确的 4
+位数字。如遗忘，请联系管理员。
+
+\subsubsection{Q:
+摄像头显示''无法访问摄像头''}\label{q-ux6444ux50cfux5934ux663eux793aux65e0ux6cd5ux8bbfux95eeux6444ux50cfux5934}
+
+\textbf{A:} 1. 检查浏览器是否有摄像头权限 2. 允许网站访问你的摄像头 3.
+重新刷新页面
+
+\subsubsection{Q:
+拍照后没有反应}\label{q-ux62cdux7167ux540eux6ca1ux6709ux53cdux5e94}
+
+\textbf{A:} 这是正常的。系统正在处理，请等待 2-3 秒。
+
+\subsubsection{Q:
+需要切换到后台管理员模式}\label{q-ux9700ux8981ux5207ux6362ux5230ux540eux53f0ux7ba1ux7406ux5458ux6a21ux5f0f}
+
+\textbf{A:} 点击左上角的 \textbf{Admin}
+链接进入管理后台（需要输入管理员密码）。
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{隐私说明}\label{ux9690ux79c1ux8bf4ux660e}
+
+\begin{itemize}
+\tightlist
+\item
+  拍摄的照片仅用于考勤记录
+\item
+  照片由管理员安全管理
+\item
+  请妥善保管你的 PIN 码，不要与他人共享
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{需要帮助？}\label{ux9700ux8981ux5e2eux52a9}
+
+如有问题，请联系你的管理员： - 重置 PIN 码 - 解决技术问题 - 查询考勤记录
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{版本}: 1.0\\
+\textbf{最后更新}: 2026-06-25
+
+\end{document}
