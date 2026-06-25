@@ -557,7 +557,7 @@ export default function AdminDashboard() {
           {/* Edit Record Modal */}
           {editingRecord && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md p-4">
-              <div className="glass w-full max-w-md p-8">
+              <div className="glass w-full max-w-2xl p-8 max-h-[90vh] overflow-y-auto">
                 <h3 className="text-2xl font-bold mb-6">Edit Record</h3>
 
                 <div className="space-y-4 mb-6">
@@ -566,6 +566,18 @@ export default function AdminDashboard() {
                       Employee: {editingRecord.employee.name}
                     </label>
                   </div>
+
+                  {/* Photo Display */}
+                  {editingRecord.photoUrl && (
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 block mb-2">Photo</label>
+                      <img
+                        src={editingRecord.photoUrl}
+                        alt="Check-in photo"
+                        className="w-full rounded-lg border border-gray-300 max-h-64 object-contain"
+                      />
+                    </div>
+                  )}
 
                   <div>
                     <label className="text-sm font-medium text-gray-700 block mb-2">Type</label>
