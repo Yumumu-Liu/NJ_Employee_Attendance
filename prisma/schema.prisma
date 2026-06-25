@@ -1,0 +1,31 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Employee {
+  id        String      @id @default(cuid())
+  name      String
+  pin       String      // 4-digit PIN for check-in
+  avatarUrl String?     // Optional URL for employee's display picture
+  isActive  Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  records   AttendanceRecord[]
+}
+
+model AttendanceRecord {
+  id         String   @id @default(cuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  type       String   // "CHECK_IN" or "CHECK_OUT"
+  timestamp  DateTime @default(now())
+  photoUrl   String   // Base64 encoded image or URL to stored photo
+  createdAt  DateTime @default(now())
+}
