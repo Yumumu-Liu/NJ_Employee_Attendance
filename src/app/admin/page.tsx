@@ -542,22 +542,29 @@ export default function AdminDashboard() {
                     onChange={(e) => setNewEmployee({ ...newEmployee, name: e.target.value })}
                     className="glass-sm rounded-lg px-4 py-2"
                   />
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="PIN (4 digits)"
-                      value={newEmployee.pin}
-                      onChange={(e) => setNewEmployee({ ...newEmployee, pin: e.target.value })}
-                      maxLength={4}
-                      className="glass-sm rounded-lg px-4 py-2 flex-1"
-                    />
-                    <button
-                      type="button"
-                      onClick={generatePin}
-                      className="glass-sm px-3 py-2 font-medium hover:scale-105 transition-transform whitespace-nowrap"
-                    >
-                      Generate
-                    </button>
+                  <div className="flex gap-2 flex-col">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="PIN (4 digits)"
+                        value={newEmployee.pin}
+                        onChange={(e) => setNewEmployee({ ...newEmployee, pin: e.target.value })}
+                        maxLength={4}
+                        className="glass-sm rounded-lg px-4 py-2 flex-1"
+                      />
+                      <button
+                        type="button"
+                        onClick={generatePin}
+                        className="glass-sm px-3 py-2 font-medium hover:scale-105 transition-transform whitespace-nowrap"
+                      >
+                        {editingId ? 'Change' : 'Generate'}
+                      </button>
+                    </div>
+                    {editingId && (
+                      <div className="text-xs text-gray-500 px-1">
+                        Current PIN: {employees.find(e => e.id === editingId)?.pin}
+                      </div>
+                    )}
                   </div>
                   <select
                     value={newEmployee.workType}
