@@ -375,29 +375,22 @@ export default function KioskPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-auto grid grid-cols-2 gap-4">
+              <div className="mt-auto space-y-3">
                 <button
                   onClick={() => handleSubmit('CHECK_IN')}
                   disabled={submitting || pin.length !== 4}
-                  className="accent-primary flex flex-col items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all disabled:opacity-50 hover:shadow-lg hover:scale-105"
+                  className="w-full py-4 px-6 rounded-2xl font-bold text-white text-lg transition-all disabled:opacity-50 hover:shadow-xl hover:scale-105 bg-green-500"
+                  style={{ backgroundColor: 'var(--primary)' }}
                 >
-                  <Clock size={28} />
-                  <div className="text-center">
-                    <div className="text-sm">{t('checkInTime')}</div>
-                    <div className="text-xs opacity-80">Check In</div>
-                  </div>
+                  ✓ {t('confirmCheckIn')} (Check In)
                 </button>
                 <button
                   onClick={() => handleSubmit('CHECK_OUT')}
                   disabled={submitting || pin.length !== 4}
-                  className="flex flex-col items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all disabled:opacity-50 hover:shadow-lg hover:scale-105"
-                  style={{ backgroundColor: 'rgba(102, 204, 0, 0.15)', color: 'var(--primary)', border: '2px solid var(--primary)' }}
+                  className="w-full py-4 px-6 rounded-2xl font-bold text-lg transition-all disabled:opacity-50 hover:shadow-xl hover:scale-105"
+                  style={{ backgroundColor: 'rgba(102, 204, 0, 0.2)', color: 'var(--primary)', border: '3px solid var(--primary)' }}
                 >
-                  <CheckCircle2 size={28} />
-                  <div className="text-center">
-                    <div className="text-sm">{t('checkOutTime')}</div>
-                    <div className="text-xs opacity-80">Check Out</div>
-                  </div>
+                  ✓ {t('confirmCheckOut')} (Check Out)
                 </button>
               </div>
             </div>
