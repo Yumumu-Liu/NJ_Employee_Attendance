@@ -1,0 +1,271 @@
+<h1 id="admin-guide">👨‍💻 Admin Guide</h1>
+<h2 id="宁季手打柠檬茶-考勤系统---管理员使用指南">宁季手打柠檬茶 考勤系统 - 管理员使用指南</h2>
+<hr />
+<h2 id="系统简介">📋 系统简介</h2>
+<p>这是一个完整的员工考勤管理系统，支持员工管理、考勤记录查看和数据导出。</p>
+<p><strong>Admin URL</strong>: 后台地址 <code>/admin</code> （由系统管理员提供）</p>
+<hr />
+<h2 id="登录">🔐 登录</h2>
+<h3 id="首次登录">首次登录</h3>
+<ol type="1">
+<li>访问后台 Admin 链接</li>
+<li>输入管理员密码：<code>Quaphase888</code></li>
+<li>点击 <strong>Login</strong> 进入</li>
+</ol>
+<h3 id="安全说明">安全说明</h3>
+<ul>
+<li>每次打开页面都需要重新输入密码（不保存登录状态）</li>
+<li>确保在安全的环境下输入密码</li>
+<li>使用完毕后点击右上角 <strong>Logout</strong> 退出</li>
+</ul>
+<hr />
+<h2 id="考勤记录管理">📊 考勤记录管理</h2>
+<h3 id="查看考勤记录">查看考勤记录</h3>
+<ol type="1">
+<li>点击 <strong>Attendance Records</strong> 标签</li>
+<li>选择日期（可用日期导航器）</li>
+<li>表格显示当天所有员工的打卡情况</li>
+</ol>
+<h3 id="表格说明">表格说明</h3>
+<table>
+<thead>
+<tr class="header">
+<th>列</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Employee Name</strong></td>
+<td>员工姓名</td>
+</tr>
+<tr class="even">
+<td><strong>Check-In Time</strong></td>
+<td>上班打卡时间（HH:mm:ss）</td>
+</tr>
+<tr class="odd">
+<td><strong>Check-Out Time</strong></td>
+<td>下班打卡时间（HH:mm:ss）</td>
+</tr>
+<tr class="even">
+<td><strong>Status</strong></td>
+<td>考勤状态：Normal / Missing Check-In / Missing Check-Out / Absent</td>
+</tr>
+<tr class="odd">
+<td><strong>Actions</strong></td>
+<td>✕ 按钮删除该条记录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="编辑打卡记录">编辑打卡记录</h3>
+<p><strong>修改打卡时间：</strong> 1. 点击表格中的时间（例如 “13:07:42”） 2. 编辑模态框出现 3. 修改： - <strong>Type</strong>: Check In 或 Check Out - <strong>Date &amp; Time</strong>: 使用日期时间选择器 4. 点 <strong>Update</strong> 保存</p>
+<p><strong>删除打卡记录：</strong> 1. 点击表格右侧的 <strong>✕</strong> 按钮 2. 确认删除 3. 记录被删除（无法恢复）</p>
+<h3 id="导出数据">导出数据</h3>
+<p><strong>导出为 Excel：</strong> 1. 选择要导出的日期 2. 点击右上角 <strong>Export to Excel</strong> 按钮 3. 文件自动下载：<code>attendance_YYYY-MM-DD.xlsx</code></p>
+<p>Excel 文件包含： - 员工姓名 - 考勤日期 - 上班时间 - 下班时间 - 考勤状态</p>
+<hr />
+<h2 id="员工管理">👥 员工管理</h2>
+<h3 id="查看员工列表">查看员工列表</h3>
+<ol type="1">
+<li>点击 <strong>Employees</strong> 标签</li>
+<li>显示所有员工及其信息：
+<ul>
+<li>姓名</li>
+<li>PIN 码</li>
+<li>工作类型（Full-Time / Part-Time）</li>
+<li>打卡开始时间（可选）</li>
+</ul></li>
+</ol>
+<h3 id="添加新员工">添加新员工</h3>
+<p><strong>方式 1：手动添加</strong> 1. 点击 <strong>Add Employee</strong> 按钮 2. 表单显示以下字段： - <strong>Employee Name</strong>: 员工姓名（必填） - <strong>PIN</strong>: 4 位数字（必填） - <strong>Work Type</strong>: 选择 Full-Time 或 Part-Time - <strong>Work Start Time</strong>: 预期打卡时间（可选）</p>
+<ol start="3" type="1">
+<li>生成 PIN：
+<ul>
+<li>点 <strong>Generate</strong> 按钮自动生成随机 4 位 PIN</li>
+<li>或手动输入 PIN 码</li>
+</ul></li>
+<li>点 <strong>Save</strong> 创建员工</li>
+</ol>
+<h3 id="编辑员工信息">编辑员工信息</h3>
+<p><strong>修改现有员工：</strong> 1. 在员工列表中，点击员工名字或 <strong>✏️</strong> 按钮 2. 编辑表单出现，显示： - 当前信息 - <strong>Current PIN: XXXX</strong> 提示 3. 修改任何字段 4. 点 <strong>Generate</strong> 或 <strong>Change</strong> 生成新 PIN（可选） 5. 点 <strong>Update</strong> 保存更改</p>
+<h3 id="删除员工">删除员工</h3>
+<p><strong>软删除：</strong> 1. 在员工列表中找到员工 2. 点 <strong>✕</strong> 删除按钮 3. 确认删除 4. 员工被标记为不活跃（数据保留，不会在打卡页面显示）</p>
+<h3 id="批量导入员工">批量导入员工</h3>
+<p><strong>导入 Excel 文件：</strong> 1. 点 <strong>Import Employees</strong> 按钮 2. 选择 Excel 文件（.xlsx, .xls, .csv） 3. 文件格式要求：</p>
+<table>
+<thead>
+<tr class="header">
+<th>列名</th>
+<th>说明</th>
+<th>必填</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Employee Name</strong> 或 <strong>员工姓名</strong></td>
+<td>员工名字</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td><strong>PIN</strong> 或 <strong>pin</strong></td>
+<td>4 位数字 PIN</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td><strong>Work Type</strong> 或 <strong>工作类型</strong></td>
+<td>full 或 part</td>
+<td>✗</td>
+</tr>
+<tr class="even">
+<td><strong>Work Start Time</strong> 或 <strong>打卡开始时间</strong></td>
+<td>HH:mm 格式</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<p><strong>导入示例 Excel：</strong></p>
+<pre><code>Employee Name | PIN  | Work Type | Work Start Time
+张三          | 1234 | full      | 09:00
+李四          | 5678 | part      | 14:00
+王五          | 0000 | full      |</code></pre>
+<ol start="4" type="1">
+<li>点 <strong>Upload</strong> 导入</li>
+<li>系统显示导入结果：成功数、错误数</li>
+</ol>
+<h3 id="下载导入模板">下载导入模板</h3>
+<ol type="1">
+<li>在员工管理页面，点 <strong>Download Template</strong></li>
+<li>获得标准 Excel 模板</li>
+<li>填入员工信息后上传</li>
+</ol>
+<hr />
+<h2 id="语言设置">🌐 语言设置</h2>
+<p>支持英文和中文： - 右上角 <strong>EN</strong> / <strong>中文</strong> 按钮切换语言 - 设置对所有页面生效</p>
+<hr />
+<h2 id="快速导航">🔗 快速导航</h2>
+<table>
+<thead>
+<tr class="header">
+<th>功能</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>打卡页面</td>
+<td>点 “← Back to Kiosk”</td>
+</tr>
+<tr class="even">
+<td>员工管理</td>
+<td>Employees 标签</td>
+</tr>
+<tr class="odd">
+<td>考勤查看</td>
+<td>Attendance Records 标签</td>
+</tr>
+<tr class="even">
+<td>登出</td>
+<td>点右上角 <strong>Logout</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="系统配置">⚙️ 系统配置</h2>
+<h3 id="数据库">数据库</h3>
+<ul>
+<li><strong>数据库</strong>: Supabase PostgreSQL</li>
+<li><strong>备份</strong>: 由 Supabase 自动处理</li>
+</ul>
+<h3 id="部署">部署</h3>
+<ul>
+<li><strong>托管</strong>: Render</li>
+<li><strong>数据库</strong>: Supabase</li>
+</ul>
+<h3 id="环境变量">环境变量</h3>
+<ul>
+<li><strong>ADMIN_PASSWORD</strong>: 管理员密码（<code>.env</code> 文件中）</li>
+<li><strong>DATABASE_URL</strong>: 数据库连接（<code>.env</code> 文件中）</li>
+</ul>
+<hr />
+<h2 id="数据统计">📈 数据统计</h2>
+<h3 id="考勤状态说明">考勤状态说明</h3>
+<table>
+<thead>
+<tr class="header">
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Normal</strong></td>
+<td>有签到和签出记录 ✅</td>
+</tr>
+<tr class="even">
+<td><strong>Missing Check-In</strong></td>
+<td>只有签出，没有签入 ⚠️</td>
+</tr>
+<tr class="odd">
+<td><strong>Missing Check-Out</strong></td>
+<td>只有签入，没有签出 ⚠️</td>
+</tr>
+<tr class="even">
+<td><strong>Absent</strong></td>
+<td>没有任何记录 ❌</td>
+</tr>
+</tbody>
+</table>
+<h3 id="导出报表">导出报表</h3>
+<p>导出的 Excel 文件可用于： - 生成月度考勤报告 - 计算工资（根据出勤天数） - 分析员工出勤情况 - 存档记录</p>
+<hr />
+<h2 id="安全最佳实践">🔒 安全最佳实践</h2>
+<ol type="1">
+<li><strong>定期更改密码</strong>
+<ul>
+<li>每月更换一次管理员密码</li>
+<li>在 <code>.env</code> 文件中修改 <code>ADMIN_PASSWORD</code></li>
+</ul></li>
+<li><strong>访问控制</strong>
+<ul>
+<li>只在安全网络上访问管理后台</li>
+<li>使用强密码保护</li>
+<li>不要与他人共享管理员密码</li>
+</ul></li>
+<li><strong>数据备份</strong>
+<ul>
+<li>Supabase 自动备份</li>
+<li>定期导出 Excel 备份重要数据</li>
+</ul></li>
+<li><strong>登出</strong>
+<ul>
+<li>使用完毕后务必点击 Logout</li>
+<li>关闭浏览器标签页</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="常见问题">🆘 常见问题</h2>
+<h3 id="q-忘记管理员密码">Q: 忘记管理员密码</h3>
+<p><strong>A:</strong> 修改 <code>.env</code> 文件中的 <code>ADMIN_PASSWORD</code> 值，重新部署应用。</p>
+<h3 id="q-导入员工失败">Q: 导入员工失败</h3>
+<p><strong>A:</strong> 检查： - Excel 文件格式正确 - PIN 码必须是 4 位数字 - Work Type 必须是 “full” 或 “part”</p>
+<h3 id="q-考勤记录无法编辑">Q: 考勤记录无法编辑</h3>
+<p><strong>A:</strong> 检查： - 已登录管理后台 - 记录确实存在于表格中 - 点击正确的时间单元格</p>
+<h3 id="q-员工删除后能否恢复">Q: 员工删除后能否恢复</h3>
+<p><strong>A:</strong> 软删除后数据仍在数据库中，但不会显示。无法通过 UI 恢复，需要数据库管理员手动处理。</p>
+<h3 id="q-如何导出所有数据">Q: 如何导出所有数据</h3>
+<p><strong>A:</strong> - 按日期导出 Excel（当前方式） - 或联系 Supabase 获取数据库备份</p>
+<hr />
+<h2 id="技术支持">📞 技术支持</h2>
+<p>如需技术支持： 1. 检查 Render 部署日志 2. 查看 Supabase 数据库状态 3. 联系系统管理员</p>
+<hr />
+<p><strong>版本</strong>: 1.0<br />
+<strong>最后更新</strong>: 2026-06-25<br />
+<strong>系统</strong>: Attendance System v1.0</p>
+<hr />
+<h2 id="快速参考卡">📌 快速参考卡</h2>
+<pre><code>登录密码: Quaphase888
+员工 PIN: 4 位数字（自动生成或手动设置）
+支持语言: 英文 + 中文
+数据导出: Excel (.xlsx)
+时间格式: HH:mm:ss
+日期格式: DD/MM/YYYY</code></pre>
