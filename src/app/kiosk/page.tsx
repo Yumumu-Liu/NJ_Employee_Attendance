@@ -54,6 +54,23 @@ export default function KioskPage() {
     return () => stopCamera()
   }, [selectedEmployee])
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (!selectedEmployee) return
+
+      if (e.key >= '0' && e.key <= '9' && pin.length < 4) {
+        handlePinInput(e.key)
+      } else if (e.key === 'Backspace') {
+        handleBackspace()
+      } else if (e.key === 'Enter' && pin.length === 4) {
+        handleSubmit('CHECK_IN')
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [selectedEmployee, pin])
+
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -362,19 +379,25 @@ export default function KioskPage() {
                 <button
                   onClick={() => handleSubmit('CHECK_IN')}
                   disabled={submitting || pin.length !== 4}
-                  className="accent-primary flex items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all disabled:opacity-50"
+                  className="accent-primary flex flex-col items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all disabled:opacity-50 hover:shadow-lg hover:scale-105"
                 >
-                  <Clock size={24} />
-                  {t('confirmCheckIn')}
+                  <Clock size={28} />
+                  <div className="text-center">
+                    <div className="text-sm">{t('checkInTime')}</div>
+                    <div className="text-xs opacity-80">Check In</div>
+                  </div>
                 </button>
                 <button
                   onClick={() => handleSubmit('CHECK_OUT')}
                   disabled={submitting || pin.length !== 4}
-                  className="flex items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all disabled:opacity-50"
-                  style={{ backgroundColor: 'rgba(102, 204, 0, 0.2)', color: 'var(--primary)' }}
+                  className="flex flex-col items-center justify-center gap-2 rounded-2xl py-4 font-bold transition-all disabled:opacity-50 hover:shadow-lg hover:scale-105"
+                  style={{ backgroundColor: 'rgba(102, 204, 0, 0.15)', color: 'var(--primary)', border: '2px solid var(--primary)' }}
                 >
-                  <CheckCircle2 size={24} />
-                  {t('confirmCheckOut')}
+                  <CheckCircle2 size={28} />
+                  <div className="text-center">
+                    <div className="text-sm">{t('checkOutTime')}</div>
+                    <div className="text-xs opacity-80">Check Out</div>
+                  </div>
                 </button>
               </div>
             </div>
